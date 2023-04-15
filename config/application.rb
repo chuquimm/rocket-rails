@@ -18,10 +18,11 @@ module RocketRails
     config.autoload_paths << Rails.root.join('lib')
 
     config.generators do |generate|
+      generate.template_engine :erb
       generate.helper false
     end
 
-    config.action_dispatch.cookies_same_site_protection = :none
+    # config.action_dispatch.cookies_same_site_protection = :none
 
     # Configuration for the application, engines, and railties goes here.
     #
