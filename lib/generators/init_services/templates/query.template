@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+<% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
+<% end %>module <%= "#{model.pluralize.camelcase}" %>
+  # ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + [model.pluralize.camelcase, 'Query'].join('::') %>
+  class Query
+    def all
+      querier.all
+    end
+
+    private
+
+    def querier
+     ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + model.singularize.camelcase %> 
+    end
+  end
+end
+<% options.modules.each do |mod| %><%= "end" %>
+<% end %>
+

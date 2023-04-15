@@ -1,0 +1,18 @@
+# frozen_string_literal: true
+
+<% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
+<% end %>module <%= "#{model.pluralize.camelcase}" %>
+  # ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + [model.pluralize.camelcase, 'Info'].join('::') %>
+  class Info
+    def initialize(<%= "#{@model.singularize.underscore}" %>)
+      @<%= "#{@model.singularize.underscore}" %> = <%= "#{@model.singularize.underscore}" %>
+    end
+
+    def basic_info_json
+      @<%= "#{@model.singularize.underscore}" %>.to_json(only: %i[id])
+    end
+  end
+end
+<% options.modules.each do |mod| %><%= "end" %>
+<% end %>
+
