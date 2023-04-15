@@ -13,6 +13,16 @@ module RocketRails
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    config.autoload_paths << Rails.root.join('config', 'routes')
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    config.autoload_paths << Rails.root.join('lib')
+
+    config.generators do |generate|
+      generate.helper false
+    end
+
+    config.action_dispatch.cookies_same_site_protection = :none
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
