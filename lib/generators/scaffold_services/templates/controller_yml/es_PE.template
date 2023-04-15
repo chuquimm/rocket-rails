@@ -1,0 +1,9 @@
+es-PE:
+  controller:
+    <%= "#{options.modules.join('/')}" %><%="#{options.modules.empty? ? '' : '/'}"%><%= "#{model.pluralize.underscore}" %>:
+      success:
+        create: '[Art_singular_model_name] fue cread[o] correctamente'
+        update: 'Los datos d[art_singular_model] fueron modificados correctamente'
+        destroy: '[Art_singular_model_name] fue eliminad[o] correctamente'
+      error:
+        destroy: '[Art_singular_model_name] no pudo ser eliminad[o]'

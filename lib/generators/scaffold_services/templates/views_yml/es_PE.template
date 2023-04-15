@@ -1,0 +1,34 @@
+es-PE:
+  view:
+    <%= options.modules.join('/') %><%="#{options.modules.empty? ? '' : '/'}"%><%= "#{model.pluralize.underscore}" %>:
+      index:
+        title: 'Gestionar [plural_model]'
+        new_link: 'Crear [singular_model]'
+        show_link: 'Configurar'
+      show:
+        back_link: 'Volver a la lista de [plural_model]'
+        title: 'Datos d[art_singular_model]'
+        edit_link: 'Editar'
+        edit_pass_link: 'Editar contraseña'
+        edit_char_link: 'Editar'
+        destroy_link: 'Eliminar'
+        destroy_confirm_message: '¿Está seguro de eliminar [art_singular_model]?'
+      new:
+        back_link: 'Volver a la lista de [plural_model]'
+        form_title: 'Crear [singular_model]'
+        save_button: 'Crear'
+      create:
+        back_link: 'Volver a la lista de [plural_model]'
+        form_title: 'Crear [singular_model]'
+        save_button: 'Crear'
+      edit:
+        back_link: 'Volver a configurar [art_singular_model]'
+        form_title: 'Editar [singular_model]'
+        form_photo_message: 'Archivo formato jpg o png, menor a 1mb'
+        save_button: 'Guardar'
+      update:
+        back_link: 'Volver a configurar [art_singular_model]'
+        form_title: 'Editar [singular_model]'
+        save_button: 'Guardar'
+      _show_basic_info:
+        title: 'Usuario'

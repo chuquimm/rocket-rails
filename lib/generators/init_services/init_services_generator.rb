@@ -7,6 +7,7 @@ class InitServicesGenerator < Rails::Generators::Base
 
   def gen_init
     set_dirs
+    set_so_base_name
     services.each { |service| init service }
     options.languages.each { |language| create_locales language }
   end
@@ -14,30 +15,17 @@ class InitServicesGenerator < Rails::Generators::Base
   private
 
   def set_dirs
-    set_services_dir
-    set_locales_dir
-  end
-
-  def set_services_dir
-    @services_dir = services_dir
-  end
-
-  def services_dir
-    ['app', 'services', modules_prefix_dir, model.pluralize.underscore].compact.join('/')
-  end
-
-  def set_locales_dir
-    @locales_dir = locales_dir
-  end
-
-  def locales_dir
-    ['config', 'locales', 'activerecords', modules_prefix_dir, model.pluralize.underscore].compact.join('/')
-  end
-
-  def modules_prefix_dir
-    prefix = ''
     prefix = options.modules.join('/')
     prefix.empty?  ? nil : prefix
+    @services_dir = ['app', 'services', prefix, model.pluralize.underscore].compact.join('/')
+    @locales_dir = ['config', 'locales', 'activerecords', prefix, model.pluralize.underscore].compact.join('/')
+  end
+
+  def set_so_base_name
+    @so_base_name = ''
+    options.modules.each do |mod|
+      @so_base_name += "#{mod.camelcase}::"
+    end
   end
 
   def init(service)

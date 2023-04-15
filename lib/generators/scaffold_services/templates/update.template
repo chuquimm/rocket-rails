@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+<% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
+<% end %>module <%= "#{model.pluralize.camelcase}" %>
+  # ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + [model.pluralize.camelcase, 'Create'].join('::') %>
+  class Update
+    def initialize(<%= "#{@model.singularize.underscore}" %>, params)
+      @<%= "#{@model.singularize.underscore}" %> = <%= "#{@model.singularize.underscore}" %>
+      @params = params
+    end
+
+    def update
+        @<%= "#{@model.singularize.underscore}" %>.update(@params) ? true : false
+    end
+  end
+end
+<% options.modules.each do |mod| %><%= "end" %>
+<% end %>
+

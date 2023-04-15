@@ -1,0 +1,22 @@
+# frozen_string_literal: true
+
+<% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
+<% end %>module <%= "#{model.pluralize.camelcase}" %>
+  # ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + [model.pluralize.camelcase, 'Destroy'].join('::') %>
+  class Destroy
+    def initialize(<%= "#{@model.singularize.underscore}" %>)
+      @<%= "#{@model.singularize.underscore}" %> = <%= "#{@model.singularize.underscore}" %>
+    end
+
+    def destroy
+      begin
+        @<%= "#{@model.singularize.underscore}" %>.destroy
+      rescue ActiveRecord::InvalidForeignKey
+        false
+      end
+    end
+  end
+end
+<% options.modules.each do |mod| %><%= "end" %>
+<% end %>
+

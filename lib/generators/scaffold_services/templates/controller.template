@@ -1,0 +1,68 @@
+# frozen_string_literal: true
+
+<% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
+<% end %># <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %>::<%=model.camelcase%>Controller
+class <%=model.pluralize.camelcase%>Controller < ApplicationController
+  before_action :set_<%=@singular_model_name%>, only: %i[show edit update destroy]
+
+  def index
+    @<%=@plural_model_name%> = <%=@singular_model_name%>_class.all
+  end
+
+  def show; end
+
+  def new
+    @<%=@singular_model_name%> = <%=@singular_model_name%>_class.new
+  end
+
+  def edit; end
+
+  def create
+    @<%=@singular_model_name%> = ::<%= @so_base_name %><%=model.camelcase%>::Create.new(<%=@singular_model_name%>_params).save
+    if @<%=@singular_model_name%>.persisted?
+      flash[:success] = c_t('success.create')
+      redirect_to @<%=@singular_model_name%>
+    else
+      render :new
+    end
+  end
+
+  def update
+    if ::<%= @so_base_name %><%=model.camelcase%>::Update.new(@<%=@singular_model_name%>, <%=@singular_model_name%>_params).update
+      flash[:success] = c_t('success.update')
+      redirect_to @<%=@singular_model_name%>
+      else
+        render :edit
+      end
+  end
+
+  def destroy
+    if ::<%= @so_base_name %><%=model.camelcase%>::Destroy.new(@<%=@singular_model_name%>).destroy
+      flash[:success] = c_t('success.destroy')
+      redirect_to <%=@plural_model_name%>_url
+    else
+      flash[:danger] = c_t('error.destroy')
+      redirect_to @<%=@singular_model_name%>
+    end
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_<%=@singular_model_name%>
+      @<%=@singular_model_name%> = <%=@singular_model_name%>_class.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def <%=@singular_model_name%>_params
+    params.require(:<%=@singular_model_name%>).permit(<% (@so_base_name+model.camelcase).constantize.column_names.each do |column_name| %><% next if column_name == 'id' || column_name == 'created_at' || column_name == 'updated_at' %><%= ":#{column_name}, " %><% end %>)
+  end
+
+  # Services shortcuts
+  def <%=@singular_model_name%>_class
+    ::<%= @so_base_name %><%=model.camelcase%>
+  end
+end
+<% options.modules.each do |mod| %>
+end
+<% end %>
