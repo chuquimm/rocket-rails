@@ -23,7 +23,7 @@ class InitServicesGenerator < Rails::Generators::Base
   end
 
   def services_dir
-    ['app', 'services', modules_prefix, model.pluralize.underscore].compact.join('/')
+    ['app', 'services', modules_prefix_dir, model.pluralize.underscore].compact.join('/')
   end
 
   def set_locales_dir
@@ -31,15 +31,13 @@ class InitServicesGenerator < Rails::Generators::Base
   end
 
   def locales_dir
-    ['config', 'locales', 'activerecords', modules_prefix, model.pluralize.underscore].compact.join('/')
+    ['config', 'locales', 'activerecords', modules_prefix_dir, model.pluralize.underscore].compact.join('/')
   end
 
-  def modules_prefix
+  def modules_prefix_dir
     prefix = ''
-    options.modules.each do |mod|
-      prefix += mod
-    end
-    prefix.empty?  ? nil : ''
+    prefix = options.modules.join('/')
+    prefix.empty?  ? nil : prefix
   end
 
   def init(service)

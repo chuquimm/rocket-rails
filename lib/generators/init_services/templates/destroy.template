@@ -2,7 +2,7 @@
 
 <% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
 <% end %>module <%= "#{model.pluralize.camelcase}" %>
-  # ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + [model.pluralize.camelcase, 'Destroy'].join('::') %>
+  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{model.pluralize.camelcase}" %>::Destroy
   class Destroy
     def initialize(<%= "#{@model.singularize.underscore}" %>)
       @<%= "#{@model.singularize.underscore}" %> = <%= "#{@model.singularize.underscore}" %>

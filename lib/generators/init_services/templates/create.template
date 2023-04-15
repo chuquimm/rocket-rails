@@ -2,7 +2,7 @@
 
 <% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
 <% end %>module <%= "#{model.pluralize.camelcase}" %>
-  # ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + [model.pluralize.camelcase, 'Create'].join('::') %>
+  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{model.pluralize.camelcase}" %>::Create
   class Create
     def initialize(params)
       @params = params

@@ -2,7 +2,7 @@
 
 <% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
 <% end %>module <%= "#{model.pluralize.camelcase}" %>
-  # ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + [model.pluralize.camelcase, 'Create'].join('::') %>
+  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{model.pluralize.camelcase}" %>::Update
   class Update
     def initialize(<%= "#{@model.singularize.underscore}" %>, params)
       @<%= "#{@model.singularize.underscore}" %> = <%= "#{@model.singularize.underscore}" %>
