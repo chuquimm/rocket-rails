@@ -12,7 +12,7 @@ class ScaffoldServicesGenerator < Rails::Generators::Base
     services.each { |service| init service }
     gen_locales
     template 'controller.template', @controller_path
-    gen_views
+    # gen_views
   end
 
   private
