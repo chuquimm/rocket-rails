@@ -18,7 +18,7 @@ class <%=model.pluralize.camelcase%>Controller < ApplicationController
   def edit; end
 
   def create
-    @<%=@singular_model_name%> = ::<%= @so_base_name %><%=model.camelcase%>::Create.new(<%=@singular_model_name%>_params).save
+    @<%=@singular_model_name%> = ::<%= @so_base_name %><%=model.pluralize.camelcase%>::Create.new(<%=@singular_model_name%>_params).save
     if @<%=@singular_model_name%>.persisted?
       flash[:success] = c_t('success.create')
       redirect_to @<%=@singular_model_name%>
@@ -28,7 +28,7 @@ class <%=model.pluralize.camelcase%>Controller < ApplicationController
   end
 
   def update
-    if ::<%= @so_base_name %><%=model.camelcase%>::Update.new(@<%=@singular_model_name%>, <%=@singular_model_name%>_params).update
+    if ::<%= @so_base_name %><%=model.pluralize.camelcase%>::Update.new(@<%=@singular_model_name%>, <%=@singular_model_name%>_params).update
       flash[:success] = c_t('success.update')
       redirect_to @<%=@singular_model_name%>
       else
@@ -37,7 +37,7 @@ class <%=model.pluralize.camelcase%>Controller < ApplicationController
   end
 
   def destroy
-    if ::<%= @so_base_name %><%=model.camelcase%>::Destroy.new(@<%=@singular_model_name%>).destroy
+    if ::<%= @so_base_name %><%=model.pluralize.camelcase%>::Destroy.new(@<%=@singular_model_name%>).destroy
       flash[:success] = c_t('success.destroy')
       redirect_to <%=@plural_model_name%>_url
     else
