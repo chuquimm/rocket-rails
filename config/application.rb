@@ -19,7 +19,7 @@ module RocketRails
 
     config.generators do |generate|
       generate.template_engine :erb
-      #generate.resource_route false
+      generate.resource_route false # TODO: modificar generador de scaffold para que llamen al generador modificado.
       generate.helper false
     end
 

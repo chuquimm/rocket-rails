@@ -32,6 +32,7 @@ module Rails
 
       def create_route_file
         template 'route.template', "config/routes/#{file_name.pluralize.underscore}_routes.rb"
+        # TODO: usar el metodo 'route' que se usa por defecto en el generador, pero dentro del template.
       end
     end
   end
