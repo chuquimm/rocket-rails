@@ -1,7 +1,6 @@
-class InitServicesGenerator < Rails::Generators::Base
+class InitServicesGenerator < Rails::Generators::NamedBase
   source_root File.expand_path("templates", __dir__)
 
-  argument :model, type: :string
   class_option :modules, type: :array, default: []
   class_option :languages, type: :array, default: ['es-PE']
 
@@ -16,9 +15,9 @@ class InitServicesGenerator < Rails::Generators::Base
 
   def set_dirs
     prefix = options.modules.join('/')
-    prefix.empty?  ? nil : prefix
-    @services_dir = ['app', 'services', prefix, model.pluralize.underscore].compact.join('/')
-    @locales_dir = ['config', 'locales', 'activerecords', prefix, model.pluralize.underscore].compact.join('/')
+    prefix.empty? ? nil : prefix
+    @services_dir = ['app', 'services', prefix, file_name.pluralize.underscore].compact.join('/')
+    @locales_dir = ['config', 'locales', 'activerecords', prefix, file_name.pluralize.underscore].compact.join('/')
   end
 
   def set_so_base_name

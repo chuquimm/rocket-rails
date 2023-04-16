@@ -1,8 +1,8 @@
 <%= @language %>:
   activerecord:
     attributes:
-      <%= "#{options.modules.join('/')}" %><%= options.modules.empty? ? '' : '/'%><%= "#{model.underscore}" %>:
+      <%= "#{options.modules.join('/')}" %><%= options.modules.empty? ? '' : '/'%><%= "#{file_name.underscore}" %>:
     errors:
       models:
-          <%= "#{options.modules.join('/')}" %><%= options.modules.empty? ? '' : '/'%><%= "#{model.underscore}" %>:
+          <%= "#{options.modules.join('/')}" %><%= options.modules.empty? ? '' : '/'%><%= "#{file_name.underscore}" %>:
             attributes:

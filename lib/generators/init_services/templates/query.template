@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 <% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
-<% end %>module <%= "#{model.pluralize.camelcase}" %>
-  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{model.pluralize.camelcase}" %>::Query
+<% end %>module <%= "#{file_name.pluralize.camelcase}" %>
+  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{file_name.pluralize.camelcase}" %>::Query
   class Query
     def all
       querier.all
@@ -11,7 +11,7 @@
     private
 
     def querier
-     ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + model.singularize.camelcase %> 
+     ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + file_name.singularize.camelcase %> 
     end
   end
 end

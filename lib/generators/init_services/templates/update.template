@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 <% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
-<% end %>module <%= "#{model.pluralize.camelcase}" %>
-  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{model.pluralize.camelcase}" %>::Update
+<% end %>module <%= "#{file_name.pluralize.camelcase}" %>
+  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{file_name.pluralize.camelcase}" %>::Update
   class Update
-    def initialize(<%= "#{@model.singularize.underscore}" %>, params)
-      @<%= "#{@model.singularize.underscore}" %> = <%= "#{@model.singularize.underscore}" %>
+    def initialize(<%= "#{@file_name.singularize.underscore}" %>, params)
+      @<%= "#{@file_name.singularize.underscore}" %> = <%= "#{@file_name.singularize.underscore}" %>
       @params = params
     end
 
     def update
-        @<%= "#{@model.singularize.underscore}" %>.update(@params) ? true : false
+        @<%= "#{@file_name.singularize.underscore}" %>.update(@params) ? true : false
     end
   end
 end

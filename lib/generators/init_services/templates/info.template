@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 <% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
-<% end %>module <%= "#{model.pluralize.camelcase}" %>
-  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{model.pluralize.camelcase}" %>::Info
+<% end %>module <%= "#{file_name.pluralize.camelcase}" %>
+  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{file_name.pluralize.camelcase}" %>::Info
   class Info
-    def initialize(<%= "#{@model.singularize.underscore}" %>)
-      @<%= "#{@model.singularize.underscore}" %> = <%= "#{@model.singularize.underscore}" %>
+    def initialize(<%= "#{@file_name.singularize.underscore}" %>)
+      @<%= "#{@file_name.singularize.underscore}" %> = <%= "#{@file_name.singularize.underscore}" %>
     end
 
     def basic_info_json
-      @<%= "#{@model.singularize.underscore}" %>.to_json(only: %i[id])
+      @<%= "#{@file_name.singularize.underscore}" %>.to_json(only: %i[id])
     end
   end
 end
