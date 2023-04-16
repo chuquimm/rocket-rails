@@ -19,6 +19,7 @@ module RocketRails
 
     config.generators do |generate|
       generate.template_engine :erb
+      #generate.resource_route false
       generate.helper false
     end
 
