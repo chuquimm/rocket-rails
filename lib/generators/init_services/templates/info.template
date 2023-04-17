@@ -3,13 +3,14 @@
 <% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
 <% end %>module <%= "#{file_name.pluralize.camelcase}" %>
   # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{file_name.pluralize.camelcase}" %>::Info
+  # [Modified by] rails generate init_services <%= file_name %>
+  # [Last modified] <%= Date.today.to_s %>
   class Info
+    # set @<%= file_name.singularize.underscore %> to gather information.
+    # [Modified by] rails generate init_services <%= file_name %>
+    # [Last modified] <%= Date.today.to_s %>
     def initialize(<%= "#{@file_name.singularize.underscore}" %>)
       @<%= "#{@file_name.singularize.underscore}" %> = <%= "#{@file_name.singularize.underscore}" %>
-    end
-
-    def basic_info_json
-      @<%= "#{@file_name.singularize.underscore}" %>.to_json(only: %i[id])
     end
   end
 end

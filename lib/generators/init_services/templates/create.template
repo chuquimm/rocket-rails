@@ -3,11 +3,19 @@
 <% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
 <% end %>module <%= "#{file_name.pluralize.camelcase}" %>
   # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{file_name.pluralize.camelcase}" %>::Create
+  # [Modified by] rails generate init_services <%= file_name %>
+  # [Last modified] <%= Date.today.to_s %>
   class Create
+    # set params to create a new <%= file_name.singularize.underscore %>.
+    # [Modified by] rails generate init_services <%= file_name %>
+    # [Last modified] <%= Date.today.to_s %>
     def initialize(params)
       @params = params
     end
 
+    # create a new <%= file_name.singularize.underscore %>.
+    # [Modified by] rails generate init_services <%= file_name %>
+    # [Last modified] <%= Date.today.to_s %>
     def save
       @<%= "#{@file_name.singularize.underscore}" %> = <%= @so_base_name %><%=file_name.camelcase%>.new @params
       @<%= "#{@file_name.singularize.underscore}" %>.save

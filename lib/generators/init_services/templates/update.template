@@ -3,12 +3,20 @@
 <% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
 <% end %>module <%= "#{file_name.pluralize.camelcase}" %>
   # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{file_name.pluralize.camelcase}" %>::Update
+  # [Modified by] rails generate init_services <%= file_name %>
+  # [Last modified] <%= Date.today.to_s %>
   class Update
+    # set params to update @<%= file_name.singularize.underscore %>.
+    # [Modified by] rails generate init_services <%= file_name %>
+    # [Last modified] <%= Date.today.to_s %>
     def initialize(<%= "#{@file_name.singularize.underscore}" %>, params)
       @<%= "#{@file_name.singularize.underscore}" %> = <%= "#{@file_name.singularize.underscore}" %>
       @params = params
     end
 
+    # update @<%= file_name.singularize.underscore %>.
+    # [Modified by] rails generate init_services <%= file_name %>
+    # [Last modified] <%= Date.today.to_s %>
     def update
         @<%= "#{@file_name.singularize.underscore}" %>.update(@params) ? true : false
     end

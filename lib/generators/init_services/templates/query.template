@@ -3,13 +3,21 @@
 <% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
 <% end %>module <%= "#{file_name.pluralize.camelcase}" %>
   # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{file_name.pluralize.camelcase}" %>::Query
+  # [Modified by] rails generate init_services <%= file_name %>
+  # [Last modified] <%= Date.today.to_s %>
   class Query
-    def all
-      querier.all
-    end
+    # Template method.
+    # [Modified by] rails generate init_services <%= file_name %>
+    # [Last modified] <%= Date.today.to_s %>
+    # def self.method(query_base: querier.all)
+    #   query_base
+    # end
 
     private
 
+    # Main model shortcut to this service.
+    # [Modified by] rails generate init_services <%= file_name %>
+    # [Last modified] <%= Date.today.to_s %>
     def querier
      ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + file_name.singularize.camelcase %> 
     end
