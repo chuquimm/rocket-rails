@@ -17,7 +17,6 @@ module Rails
       def add_resource_route
         return if options[:actions].present?
 
-        # route "resources :#{file_name.pluralize}", namespace: regular_class_path
         insert_basic_route
         create_route_file
       end
@@ -26,13 +25,19 @@ module Rails
 
       def insert_basic_route
         inject_into_file 'config/routes.rb', before: 'end' do
-          "  extend #{file_name.pluralize.capitalize}Routes\n"
+          "  extend #{route_class_name}\n"
         end
       end
 
+      def route_class_name
+        "#{[regular_class_path, file_name.pluralize.camelcase].flatten.map(&:camelcase).join('')}Routes"
+      end
+
       def create_route_file
-        template 'route.template', "config/routes/#{file_name.pluralize.underscore}_routes.rb"
+        dir = ['config', 'routes', regular_class_path].join('/')
+        template 'route.template', "#{dir}_#{file_name.pluralize.underscore}_routes.rb"
         # TODO: usar el metodo 'route' que se usa por defecto en el generador, pero dentro del template.
+        # route "resources :#{file_name.pluralize}", namespace: regular_class_path
       end
     end
   end

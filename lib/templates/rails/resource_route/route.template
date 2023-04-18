@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# <%=file_name.pluralize.camelcase%> routes
-module <%=file_name.pluralize.camelcase%>Routes
+# <%=route_class_name%>
+module <%=route_class_name%>
   def self.extended(router)
     router.instance_exec do
       resources :<%=file_name.pluralize%>
