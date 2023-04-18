@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-<% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
-<% end %>module <%= "#{file_name.pluralize.camelcase}" %>
-  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{file_name.pluralize.camelcase}" %>::Info
+module <%= @service_module %>
+  # ::<%= @service_module %>::Info
   # [Modified by] rails generate init_services <%= file_name %>
   # [Last modified] <%= Date.today.to_s %>
   class Info
@@ -14,6 +13,4 @@
     end
   end
 end
-<% options.modules.each do |mod| %><%= "end" %>
-<% end %>
 

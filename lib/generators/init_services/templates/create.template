@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-<% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
-<% end %>module <%= "#{file_name.pluralize.camelcase}" %>
-  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{file_name.pluralize.camelcase}" %>::Create
+module <%= @service_module %>
+  # ::<%= @service_module %>::Create
   # [Modified by] rails generate init_services <%= file_name %>
   # [Last modified] <%= Date.today.to_s %>
   class Create
@@ -17,12 +16,10 @@
     # [Modified by] rails generate init_services <%= file_name %>
     # [Last modified] <%= Date.today.to_s %>
     def save
-      @<%= "#{@file_name.singularize.underscore}" %> = <%= @so_base_name %><%=file_name.camelcase%>.new @params
+      @<%= "#{@file_name.singularize.underscore}" %> = <%= @service_model %>.new @params
       @<%= "#{@file_name.singularize.underscore}" %>.save
       @<%= "#{@file_name.singularize.underscore}" %>
     end
   end
 end
-<% options.modules.each do |mod| %><%= "end" %>
-<% end %>
 

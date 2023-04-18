@@ -11,8 +11,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   # GET <%= route_url %>/1
-  def show
-  end
+  def show; end
 
   # GET <%= route_url %>/new
   def new
@@ -20,12 +19,11 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   # GET <%= route_url %>/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST <%= route_url %>
   def create
-    @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
+    @<%= singular_table_name %> = SERVICE::Create.new(<%= singular_table_name %>_params)
 
     if @<%= orm_instance.save %>
       redirect_to <%= redirect_resource_name %>, notice: <%= %("#{human_name} was successfully created.") %>
@@ -36,7 +34,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   # PATCH/PUT <%= route_url %>/1
   def update
-    if @<%= orm_instance.update("#{singular_table_name}_params") %>
+    if SERVICE::Update.new(@<%= singular_table_name %>, <%=  singular_table_name%>_params).update
       redirect_to <%= redirect_resource_name %>, notice: <%= %("#{human_name} was successfully updated.") %>
     else
       render :edit, status: :unprocessable_entity
@@ -45,11 +43,12 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   # DELETE <%= route_url %>/1
   def destroy
-    @<%= orm_instance.destroy %>
+    SERVICE::Destroy.new(@<%= singular_table_name %>).destroy
     redirect_to <%= index_helper %>_url, notice: <%= %("#{human_name} was successfully destroyed.") %>, status: :see_other
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_<%= singular_table_name %>
       @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
@@ -63,5 +62,8 @@ class <%= controller_class_name %>Controller < ApplicationController
       params.require(:<%= singular_table_name %>).permit(<%= permitted_params %>)
       <%- end -%>
     end
+
+    # service shortcut
+    SERVICE = ::<%= controller_class_name %>
 end
 <% end -%>

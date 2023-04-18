@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-<% options.modules.each do |mod| %><%= "module #{mod.camelcase}" %>
-<% end %>module <%= "#{file_name.pluralize.camelcase}" %>
-  # <% options.modules.each do |mod| %><%= "::#{mod.camelcase}" %><% end %><%= "::#{file_name.pluralize.camelcase}" %>::Query
+module <%= @service_module %>
+  # ::<%= @service_module %>::Query
   # [Modified by] rails generate init_services <%= file_name %>
   # [Last modified] <%= Date.today.to_s %>
   class Query
@@ -19,10 +18,8 @@
     # [Modified by] rails generate init_services <%= file_name %>
     # [Last modified] <%= Date.today.to_s %>
     def querier
-     ::<%= options.modules.map{|mod| mod.camelcase}.join('::') + file_name.singularize.camelcase %> 
+     <%= @service_model %> 
     end
   end
 end
-<% options.modules.each do |mod| %><%= "end" %>
-<% end %>
 

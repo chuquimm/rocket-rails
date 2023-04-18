@@ -2,38 +2,32 @@ class InitServicesGenerator < Rails::Generators::NamedBase
   source_root File.expand_path("templates", __dir__)
 
   class_option :modules, type: :array, default: []
-  class_option :languages, type: :array, default: ['es-PE']
 
   def gen_init
-    set_dirs
-    set_so_base_name
+    assign_service_params
     services.each { |service| init service }
-    options.languages.each { |language| create_locales language }
   end
 
   private
 
-  def set_dirs
-    prefix = options.modules.join('/')
-    prefix.empty? ? nil : prefix
-    @services_dir = ['app', 'services', prefix, file_name.pluralize.underscore].compact.join('/')
-    @locales_dir = ['config', 'locales', 'activerecords', prefix, file_name.pluralize.underscore].compact.join('/')
+  def assign_service_params
+    plural_name = name.pluralize
+    @service_class_path = plural_name.include?('/') ? plural_name.split('/') : plural_name.split('::')
+    @service_class_path.map!(&:underscore)
+    @service_dir = @service_class_path.join('/')
+    @service_dir = ['app', 'services', @service_class_path].flatten.compact.join('/')
+    @service_module = @service_class_path.map(&:camelcase).join('::')
+    set_service_model
   end
 
-  def set_so_base_name
-    @so_base_name = ''
-    options.modules.each do |mod|
-      @so_base_name += "#{mod.camelcase}::"
-    end
+  def set_service_model
+    @service_model = @service_class_path.map(&:camelcase)
+    @service_model[-1] = file_name.camelcase
+    @service_model = "::#{@service_model.join('::')}"
   end
 
   def init(service)
-    template "#{service}.template", "#{@services_dir}/#{service}.rb"
-  end
-
-  def create_locales(language)
-    @language = language
-    template 'active_record_yml.template', "#{@locales_dir}/#{language}.yml"
+    template "#{service}.template", "#{@service_dir}/#{service}.rb"
   end
 
   def services
