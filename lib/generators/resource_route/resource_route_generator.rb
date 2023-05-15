@@ -35,7 +35,7 @@ module Rails
 
       def create_route_file
         dir = ['config', 'routes', regular_class_path].join('/')
-        template 'route.template', "#{dir}_#{file_name.pluralize.underscore}_routes.rb"
+        template 'route.template', "#{dir}/#{file_name.pluralize.underscore}_routes.rb"
         # TODO: usar el metodo 'route' que se usa por defecto en el generador, pero dentro del template.
         # route "resources :#{file_name.pluralize}", namespace: regular_class_path
       end
