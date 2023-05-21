@@ -4,7 +4,6 @@
 module <%=route_class_name%>
   def self.extended(router)
     router.instance_exec do
-      resources :<%=file_name.pluralize%>
     end
   end
 end
