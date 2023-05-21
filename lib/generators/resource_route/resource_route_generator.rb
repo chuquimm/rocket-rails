@@ -18,14 +18,14 @@ module Rails
         return if options[:actions].present?
 
         create_route_file
-        insert_basic_route
+        insert_extend_route('config/routes.rb', route_class_name)
       end
 
       private
 
-      def insert_basic_route
-        inject_into_file 'config/routes.rb', before: 'end' do
-          rebase_indentation("extend #{route_class_name}\n", 2)
+      def insert_extend_route(file_path, class_name, indentation: 2)
+        inject_into_file file_path, before: 'end' do
+          rebase_indentation("extend #{class_name}\n", indentation)
         end
       end
 
