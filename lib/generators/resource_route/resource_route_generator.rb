@@ -41,11 +41,15 @@ module Rails
       end
 
       def create_route_file
-        @route_class_name = main_route_class_name
-        template 'route.template', route_path
+        clone_template(main_route_class_name, route_path)
         return if behavior == :revoke
 
         route "resources :#{file_name.pluralize}", namespace: regular_class_path
+      end
+
+      def clone_template(class_name, path)
+        @route_class_name = class_name
+        template 'route.template', path
       end
 
       # Original: https://github.com/rails/rails/blob/ef04fbb3b256beececfa44c47c4ec93ac6945e59/railties/lib/rails/generators/rails/resource_route/resource_route_generator.rb
