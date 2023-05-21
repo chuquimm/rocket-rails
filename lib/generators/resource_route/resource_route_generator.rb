@@ -19,19 +19,24 @@ module Rails
 
         create_route_file
         mods = Array(regular_class_path)
-        insert_extend_route('config/routes.rb', main_route_class_name) unless mods.size.positive?
+        extended_route = main_route_class_name
 
         for i in 0..(mods.size-1)
           selected_mods = mods[0, mods.size - i]
-          mod_routes = "#{selected_mods.map(&:camelcase).join(':')}Routes"
-          log mod_routes
+          class_name = "#{selected_mods.map(&:camelcase).join('::')}Routes"
+          path = "config/routes/#{selected_mods.join('/')}_routes.rb"
+          clone_template(class_name, path)
+          insert_extend_route(path, extended_route, indentation: 6, after: "router.instance_exec do\n") unless behavior == :revoke
+          extended_route = class_name
         end
+
+        insert_extend_route('config/routes.rb', extended_route, after: "routes.draw do\n")
       end
 
       private
 
-      def insert_extend_route(file_path, class_name, indentation: 2)
-        inject_into_file file_path, before: 'end' do
+      def insert_extend_route(file_path, class_name, indentation: 2, after: '' )
+        inject_into_file file_path, after: after do
           rebase_indentation("extend #{class_name}\n", indentation)
         end
       end
