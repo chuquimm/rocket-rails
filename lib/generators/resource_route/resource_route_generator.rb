@@ -19,7 +19,7 @@ module Rails
 
         create_route_file
         mods = Array(regular_class_path)
-        insert_extend_route('config/routes.rb', route_class_name) unless mods.size.positive?
+        insert_extend_route('config/routes.rb', main_route_class_name) unless mods.size.positive?
 
         for i in 0..(mods.size-1)
           selected_mods = mods[0, mods.size - i]
@@ -36,11 +36,12 @@ module Rails
         end
       end
 
-      def route_class_name
+      def main_route_class_name
         "#{[regular_class_path, file_name.pluralize.camelcase].flatten.map(&:camelcase).join('::')}Routes"
       end
 
       def create_route_file
+        @route_class_name = main_route_class_name
         template 'route.template', route_path
         return if behavior == :revoke
 
