@@ -25,20 +25,26 @@ module Rails
           selected_mods = mods[0, mods.size - i]
           class_name = "#{selected_mods.map(&:camelcase).join('::')}Routes"
           path = "config/routes/#{selected_mods.join('/')}_routes.rb"
-          clone_template(class_name, path)
-          insert_extend_route(path, extended_route, indentation: 6, after: "router.instance_exec do\n") unless behavior == :revoke
+          exists = File.exists?(path)
+          clone_template(class_name, path) unless behavior == :revoke || (behavior != :revoke && exists)
+          insert_extend_module_route(path, extended_route) unless behavior == :revoke && extended_route != main_route_class_name
           extended_route = class_name
         end
 
-        insert_extend_route('config/routes.rb', extended_route, after: "routes.draw do\n")
+        insert_extend_route('config/routes.rb', extended_route) unless behavior == :revoke && extended_route != main_route_class_name
+          extended_route = class_name
       end
 
       private
 
-      def insert_extend_route(file_path, class_name, indentation: 2, after: '' )
+      def insert_extend_route(file_path, class_name, indentation: 2, after: "routes.draw do\n")
         inject_into_file file_path, after: after do
           rebase_indentation("extend #{class_name}\n", indentation)
         end
+      end
+
+      def insert_extend_module_route(file_path, class_name, after: "router.instance_exec do\n" )
+        insert_extend_route(file_path, class_name, indentation: 6, after: after)
       end
 
       def main_route_class_name
