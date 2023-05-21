@@ -18,7 +18,14 @@ module Rails
         return if options[:actions].present?
 
         create_route_file
-        insert_extend_route('config/routes.rb', route_class_name)
+        mods = Array(regular_class_path)
+        insert_extend_route('config/routes.rb', route_class_name) unless mods.size.positive?
+
+        for i in 0..(mods.size-1)
+          selected_mods = mods[0, mods.size - i]
+          mod_routes = "#{selected_mods.map(&:camelcase).join(':')}Routes"
+          log mod_routes
+        end
       end
 
       private
